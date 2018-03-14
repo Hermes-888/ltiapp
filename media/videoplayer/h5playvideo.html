@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Video Player</title>
+<style>
+	html, body { height:100%; }
+	body { margin:0; padding:0; overflow:hidden; }
+</style>
+</head>
+
+<body>
+    <video id="myVideo" width="960" height="540" controls>
+        <source id="vidsrc" src="" type="video/mp4">
+        This browser does not support HTML5 .mp4 video.
+    </video>
+    <!--div>Duration: <span id="duration"></span>
+    	&nbsp;&nbsp;Elapsed Time: <span id="timeDisplay"></span>
+        &nbsp;&nbsp;Calc: <span id="percnt"></span>
+    </div-->
+</body>
+<script type='text/javascript'>
+
+var videocontainer = document.getElementById('myVideo');
+var videosource = document.getElementById('vidsrc');
+
+//var curtxt = document.getElementById("timeDisplay");
+//var durtxt = document.getElementById("duration");
+//var pertxt = document.getElementById("percnt");
+
+var dur=0;
+var calcdone=0;
+var gradeSent = false;// only once
+
+// params point to video ?filename=
+function getParameter(theParameter) { 
+	var params = window.location.search.substr(1).split('?');
+	//console.log('params:'+params);
+	for(var i = 0; i < params.length; i++) {
+		var p=params[i].split('=');
+		if (p[0] == theParameter) {
+			console.log('p:'+p[0]+'='+p[1]);
+			var fn = p[1].split('&');// &key
+			return decodeURIComponent(fn[0]);
+		}
+	}
+	return false;
+}
+        
+var filename=getParameter('filename');//filename or xmlfile
+
+if(filename) {
+	videocontainer.pause();
+	videosource.setAttribute('src', filename);
+	videocontainer.load();
+	videocontainer.play();
+	
+	videocontainer.addEventListener("loadedmetadata",function(){
+		dur=videocontainer.duration
+		//durtxt.innerHTML = dur;
+	}, false);
+	videocontainer.addEventListener('timeupdate', function(){
+		var cur = videocontainer.currentTime;
+		calcdone = dur-cur;
+		//curtxt.innerHTML = cur;//.toFixed(2)
+		//pertxt.innerHTML = calcdone;// Remove when done testing
+		if(dur>0 && calcdone<10) { sendit(); }
+	}, false);
+	// or at end of video
+	 videocontainer.addEventListener('ended',videoEnded,false);
+}
+
+function videoEnded(e) {
+	if(!e) { e = window.event; }
+	console.log("Video Finished");
+	sendit();
+}
+function sendit() {
+	if( !gradeSent ) {
+		// announce done
+		parent.postMessage({'score':1},'*');
+		//var detail='taskInstructions,'+totalpoints+','+instructions;// comma delimited string
+        //parent.postMessage(detail,win);
+		gradeSent=true;	
+	}
+}
+
+</script>
+</html>
