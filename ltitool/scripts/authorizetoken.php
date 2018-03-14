@@ -4,9 +4,6 @@
    https://developer.wordpress.com/docs/oauth2/
    https://canvas.instructure.com/doc/api/file.oauth.html#using-refresh-tokens
         
-ID:  140000000000087
-Key: WK1o5GVOueM1Ha8qDgnQFfFhTXkBMomScDSY0v6Itlr466DnNcJ4CFNjasAMb2Qa
-
 works best when logged into canvas.
 
 {"access_token":"14~yS7cXhAlptprxk3oXTQbzp9DT87bFCQ0VdbiDRxUgXHOnXWwN3qAd7A4YUV0W1hU",
