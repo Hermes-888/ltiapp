@@ -8,7 +8,6 @@ URI: https://mediafiles.uvu.edu
 
 DB on mediafiles.uvu.edu
 DB Name: aviationmedia
-DB U: mediaadmin P: +8?hooraY3
 
 Current Tools: 
 Aviation, UFRA, Nursing and Secondary Ed
